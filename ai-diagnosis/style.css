@@ -73,7 +73,8 @@ h1 {
 #response {
   font-size: 1.1em;
   line-height: 1.6;
-  color: #ccc;
+  color: inherit; /* allows <span style="color:..."> to work */
+  /*color: #ccc;*/
 }
 
 header {
@@ -97,4 +98,66 @@ header {
 header h1 {
   margin: 0;           /* removes all spacing above and below */
   padding: 10px 0;     /* optional: keeps a little breathing room inside */
+}
+
+.ai-title {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* space between icon and text */
+  font-size: 1.8em;
+  color: #ff5252; /* keep original text color */
+}
+
+.robot-icon svg {
+  display: block;
+}
+
+#critical-alert {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+  z-index: 2000;
+
+  display: flex;               /* IMPORTANT — enables flexbox */
+  flex-direction: column;      /* puts icon above text */
+  justify-content: center;     /* center vertically */
+  align-items: center;         /* center horizontally */
+
+  text-align: center;
+  flex-direction: column; /* stack icon above text */
+  animation: alertPop 0.2s ease-out;
+}
+
+#critical-alert .siren-icon {
+  width: 80px;
+  margin-bottom: 15px;
+  animation: flashing 0.6s infinite alternate ease-in-out; 
+}
+
+#critical-alert p {
+  color: red;
+  font-size: 2.3em;
+  font-weight: bold;
+}
+
+/* Small entrance animation */
+@keyframes alertPop {
+  from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+  to   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* Siren pulse */
+@keyframes flashing {
+  from { filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0)); }
+  to   { filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.9)); }
+}
+
+#critical-alert {
+  display: none;
 }

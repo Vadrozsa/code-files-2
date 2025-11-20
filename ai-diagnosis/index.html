@@ -13,9 +13,28 @@
  
   <div class="container">
     <div class="left">
-      <h1>AI Diagnosis</h1>
+      <h1 class="ai-title">
+  <span class="robot-icon">
+    <!-- Inline SVG robot icon -->
+    <svg width="32" height="32" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <!-- Head -->
+      <rect x="14" y="10" width="36" height="28" rx="6" ry="6" fill="#FF0055" />
+      <!-- Eyes -->
+      <circle cx="24" cy="24" r="4" fill="#FF80AB"/>
+      <circle cx="40" cy="24" r="4" fill="#FF80AB"/>
+      <!-- Mouth -->
+      <rect x="26" y="34" width="12" height="4" rx="2" fill="#FF80AB"/>
+      <!-- Antenna -->
+      <line x1="32" y1="4" x2="32" y2="10" stroke="#FF0055" stroke-width="2"/>
+      <circle cx="32" cy="4" r="2" fill="#FF80AB"/>
+    </svg>
+  </span>
+  AI Diagnosis
+</h1>
       <p id="label">Loading model...</p>
       <p id="response"></p>
+      <div id="button-container" style="margin-top: 20px;"></div>
+
     </div>
     <div class="right" id="camera-container">
       <p>Camera Feed</p>
@@ -25,6 +44,15 @@
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 <script src="script.js"></script>
+
+<!-- Alert -->
+<div id="critical-alert">
+    <img src="siren.png" alt="Critical Alert" class="siren-icon">
+    <p>Seek medical attention NOW!</p>
+</div>
+
+<audio id="critical-sound" src="siren.mp3" preload="auto"></audio>
+
 
 </body>
 </html>
