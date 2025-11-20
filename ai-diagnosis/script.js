@@ -34,8 +34,17 @@ if (alertDiv) alertDiv.style.display = "none";
   await webcam.play();
 
   // Add webcam feed
-  cameraContainer.innerHTML = "";
-  cameraContainer.appendChild(webcam.canvas);
+  // Create a wrapper div to center the canvas
+const canvasWrapper = document.createElement('div');
+canvasWrapper.style.cssText = 'display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; position: absolute; top: 0; left: 0;';
+canvasWrapper.appendChild(webcam.canvas);
+cameraContainer.appendChild(canvasWrapper);
+
+// Recreate the scanning overlay (since innerHTML wiped it)
+const overlay = document.createElement('div');
+overlay.id = 'scanning-overlay';
+overlay.innerHTML = '<div class="scan-box"></div>';
+cameraContainer.appendChild(overlay);
 
   // Start continuous webcam update
   requestAnimationFrame(webcamLoop);
@@ -55,10 +64,30 @@ function webcamLoop() {
   requestAnimationFrame(webcamLoop);
 }
 
+let scanningInterval;
+
+function startScanning() {
+  const overlay = document.getElementById("scanning-overlay");
+  if (overlay) overlay.style.display = "block";
+}
+
+function stopScanning() {
+  const overlay = document.getElementById("scanning-overlay");
+  if (overlay) overlay.style.display = "none";
+
+  clearInterval(scanningInterval);
+}
+
+
+
+
 // Run diagnosis on button click
 async function runDiagnosis() {
   labelElement.innerText = "AI is thinking...";
   responseElement.innerHTML = "";
+
+    // ⬅️ START SCANNING EFFECT HERE
+  startScanning();
 
   const image = webcam.canvas;
 
@@ -73,6 +102,9 @@ async function runDiagnosis() {
   }
 
   const label = best.className;
+
+    // ⬅️ STOP SCANNING BEFORE TYPING TEXT
+  stopScanning();
 
   // Show diagnosis with typing effect
   await typeText(responseElement, getDiagnosis(label), 30);
